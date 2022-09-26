@@ -4,7 +4,11 @@ import com.google.inject.Inject;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.server.RegisteredServer;
 import org.slf4j.Logger;
+
+import javax.annotation.Nullable;
 
 @Plugin(
         id = "verify",
@@ -18,5 +22,10 @@ public class Verify {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
+    }
+
+    @Subscribe
+    public void ServerPostConnectEvent(Player player, @Nullable RegisteredServer previousServer) {
+        logger.debug(player.getUsername()+" connected.");
     }
 }
