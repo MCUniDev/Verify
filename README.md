@@ -8,3 +8,6 @@ Verify sends an API request with the user's username and UUID to MCUni's kit ser
 verified their account and are on the whitelist. If they are, it simply returns 'true' (ensuring that personal data is never fed back across the internet)
 and Verify allows the user to play on the server. If the user is not verified and whitelisted they are disconnected with instructions on how to add their
 account to the whitelist.
+
+## How do users verify their accounts?
+Users visit mcuni.org/account/verify to add their Minecraft username to the system. We're working on making this open-source soon.
