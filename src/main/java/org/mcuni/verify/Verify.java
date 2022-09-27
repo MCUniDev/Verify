@@ -57,8 +57,8 @@ public class Verify {
     private boolean getUserInfo(String username, String uuid) {
         try {
             logger.info("[Verify] Fetching player data for user '"+username+"' with UUID '"+uuid+"'.");
-            URL url = new URL("https://kit.mcuni.org/api/v1/user.php?username="+username+"&uuid="+uuid+"&network="+NetworkID);
-            logger.info("[DEBUG] https://kit.mcuni.org/api/v1/user.php?username="+username+"&uuid="+uuid+"&network="+NetworkID);
+            URL url = new URL("https://kit.mcuni.org/api/v1/verify.php?username="+username+"&uuid="+uuid+"&network="+NetworkID);
+            logger.info("[DEBUG] https://kit.mcuni.org/api/v1/verify.php?username="+username+"&uuid="+uuid+"&network="+NetworkID);
             Scanner s = new Scanner(url.openStream());
             if (s.hasNextLine()) {
                 String response = s.nextLine();
