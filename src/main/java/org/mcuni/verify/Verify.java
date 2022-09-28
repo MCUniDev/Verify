@@ -3,6 +3,7 @@ package org.mcuni.verify;
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.player.KickedFromServerEvent;
 import com.velocitypowered.api.event.player.ServerPostConnectEvent;
+import com.velocitypowered.api.event.player.ServerPreConnectEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.plugin.Plugin;
@@ -36,14 +37,9 @@ public class Verify {
     }
 
     @Subscribe
-    public void onPlayerKick(KickedFromServerEvent event, Player player) {
-        logger.info(player.getUsername()+" has been disconnected by a server in the proxy.");
-        player.disconnect(kickMessage());
-    }
-
-    @Subscribe
-    public void onPlayerConnect(ServerPostConnectEvent event, Player player) {
-        logger.info(player.getUsername()+" is being checked...");
+    public void onPlayerConnect(ServerPreConnectEvent event) {
+        Player player = event.getPlayer();
+        logger.info(player.getUsername()+" is being checked (PreConn)...");
         if (!getUserInfo(player.getUsername(), String.valueOf(player.getUniqueId()))) {
             logger.info("Kicked player '"+player.getUsername()+"'. Player is not registered.");
             player.disconnect(kickMessage());
@@ -53,7 +49,7 @@ public class Verify {
     }
 
     public Component kickMessage() {
-        return Component.text("Welcome to " + ServerNickname +
+        return Component.text("Welcome to " + ServerNickname + "\n" +
                 "\n" +
                 "This server is only for students at " + UniversityName + ".\n" +
                 "You need to verify that you're a student before you can join.\n" +
