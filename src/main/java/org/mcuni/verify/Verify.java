@@ -1,15 +1,15 @@
 package org.mcuni.verify;
 
 import com.google.inject.Inject;
+import com.velocitypowered.api.event.player.KickedFromServerEvent;
+import com.velocitypowered.api.event.player.ServerPostConnectEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.kyori.adventure.text.Component;
 import org.slf4j.Logger;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
@@ -31,48 +31,55 @@ public class Verify {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        logger.info("[Verify] Started MCUni Verify version 1.0");
+        logger.info("Started MCUni Verify version 1.0-DEV[1]");
+        logger.info("Now listening for players...");
+    }
+
+    @Subscribe
+    public void onPlayerKick(KickedFromServerEvent event, Player player) {
+        logger.info(player.getUsername()+" has been disconnected by a server in the proxy.");
+        player.disconnect(kickMessage());
+    }
+
+    @Subscribe
+    public void onPlayerConnect(ServerPostConnectEvent event, Player player) {
+        logger.info(player.getUsername()+" is being checked...");
+        if (!getUserInfo(player.getUsername(), String.valueOf(player.getUniqueId()))) {
+            logger.info("Kicked player '"+player.getUsername()+"'. Player is not registered.");
+            player.disconnect(kickMessage());
+        } else {
+            logger.info("Allowed player '"+player.getUsername()+"'. Player is registered.");
+        }
     }
 
     public Component kickMessage() {
-        return Component.text("Welcome to "+ServerNickname +
+        return Component.text("Welcome to " + ServerNickname +
                 "\n" +
-                "This server is only for students at "+UniversityName+".\n" +
+                "This server is only for students at " + UniversityName + ".\n" +
                 "You need to verify that you're a student before you can join.\n" +
                 "\n" +
                 "To verify your account please visit mcuni.org/verify");
     }
 
-    @Subscribe
-    public void ServerPostConnectEvent(Player player, @Nullable RegisteredServer previousServer) {
-        logger.info(player.getUsername()+" connected.");
-        if (!getUserInfo(player.getUsername(), String.valueOf(player.getUniqueId()))) {
-            logger.info("[Verify] Kicked player '"+player.getUsername()+"'. Player is not registered.");
-            player.disconnect(kickMessage());
-        } else {
-            logger.info("[Verify] Allowed player '"+player.getUsername()+"'. Player is registered.");
-        }
-    }
-
     private boolean getUserInfo(String username, String uuid) {
         try {
-            logger.info("[Verify] Fetching player data for user '"+username+"' with UUID '"+uuid+"'.");
+            logger.info("Fetching player data for user '"+username+"' with UUID '"+uuid+"'.");
             URL url = new URL("https://kit.mcuni.org/api/v1/verify.php?username="+username+"&uuid="+uuid+"&network="+NetworkID);
             logger.info("[DEBUG] https://kit.mcuni.org/api/v1/verify.php?username="+username+"&uuid="+uuid+"&network="+NetworkID);
             Scanner s = new Scanner(url.openStream());
             if (s.hasNextLine()) {
                 String response = s.nextLine();
                 if (response.equals("")) {
-                    logger.info("[Verify] There was no response from the server.");
+                    logger.info("There was no response from the server.");
                     return false;
                 } else {
-                    logger.info("[Verify] Fetched: " + response);
+                    logger.info("Fetched: " + response);
                     return response.equals("true");
                 }
             }
         }
         catch(IOException ex) {
-            logger.error("[Verify][Broadcast] Fatal error.");
+            logger.error("Fatal error.");
             logger.error(Arrays.toString(ex.getStackTrace()));
         }
         return false;
