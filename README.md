@@ -10,4 +10,4 @@ and Verify allows the user to play on the server. If the user is not verified an
 account to the whitelist.
 
 ## How do users verify their accounts?
-Users visit mcuni.org/account/verify to add their Minecraft username to the system. We're working on making this open-source soon.
+Users can visit mcuni.org/account to add their Minecraft username to the system. We're working on making this open-source soon.
