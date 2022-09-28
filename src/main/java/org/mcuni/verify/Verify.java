@@ -19,7 +19,7 @@ import java.util.Scanner;
 @Plugin(
         id = "verify",
         name = "Verify",
-        version = "1.0-SNAPSHOT"
+        version = "1.0"
 )
 public class Verify {
 
@@ -32,7 +32,7 @@ public class Verify {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        logger.info("Started MCUni Verify version 1.0-DEV[1]");
+        logger.info("Started MCUni Verify version 1.0");
         logger.info("Now listening for players...");
     }
 
