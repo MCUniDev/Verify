@@ -3,6 +3,8 @@
 ## What do is do?
 Verify ensures that users who are attempting to connect to the Minecraft Network are enroled and verified as students of a particular University.
 
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/MCUniDev/Verify/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/MCUniDev/Verify/tree/master)
+
 ## How does it work?
 Verify sends an API request with the user's username and UUID to MCUni's kit service, which will then collect the user's information and check if they have
 verified their account and are on the whitelist. If they are, it simply returns 'true' (ensuring that personal data is never fed back across the internet)
