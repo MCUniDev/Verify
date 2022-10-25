@@ -19,7 +19,7 @@ import java.util.Scanner;
 @Plugin(
         id = "verify",
         name = "Verify",
-        version = "1.0",
+        version = "1.1",
         authors = {"MCUni"}
 )
 
@@ -41,7 +41,7 @@ public class Verify {
      */
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        logger.info("Started MCUni Verify version 1.1");
+        logger.info("Started MCUni Verify version 1.0");
         logger.info("Now listening for players...");
     }
 
@@ -123,8 +123,8 @@ public class Verify {
     private String getUserInfo(String username, String uuid) {
         try {
             logger.info("Fetching player data for user '"+username+"' with UUID '"+uuid+"'.");
-            URL url = new URL("https://kit.mcuni.org/api/v3/verify.php?username="+username+"&uuid="+uuid+"&network="+NetworkID);
-            logger.info("[DEBUG] https://kit.mcuni.org/api/v3/verify.php?username="+username+"&uuid="+uuid+"&network="+NetworkID);
+            URL url = new URL("https://kit.mcuni.org/api/v2/verify.php?username="+username+"&uuid="+uuid+"&network="+NetworkID);
+            logger.info("[DEBUG] https://kit.mcuni.org/api/v2/verify.php?username="+username+"&uuid="+uuid+"&network="+NetworkID);
             Scanner s = new Scanner(url.openStream());
             if (s.hasNextLine()) {
                 String response = s.nextLine();
