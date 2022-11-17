@@ -19,7 +19,7 @@ import java.util.Scanner;
 @Plugin(
         id = "verify",
         name = "Verify",
-        version = "1.1",
+        version = "1.2",
         authors = {"MCUni"}
 )
 
@@ -41,7 +41,7 @@ public class Verify {
      */
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        logger.info("Started MCUni Verify version 1.1");
+        logger.info("Started MCUni Verify version 1.2");
         logger.info("Now listening for players...");
     }
 
