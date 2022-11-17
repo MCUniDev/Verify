@@ -26,9 +26,9 @@ import java.util.Scanner;
 public class Verify {
 
     /** The servers "nickname" to be shown if they're kicked. */
-    public String ServerNickname = "UOPMC";
-    /** The name of the University this server is affiliated with. */
-    public String UniversityName = "the University of Plymouth";
+    public String ServerNickname = "MCUni Plymouth";
+    /** The name of the city or region this server is affiliated with. */
+    public String CityName = "Plymouth";
     /** The MCUni Network ID number for this server. */
     public String NetworkID = "PLYMOUTH";
 
@@ -83,7 +83,7 @@ public class Verify {
                     "\n" +
                     "For more information please contact your server administrator.";
         } else if (reason.equals("4") || reason.equals("6")) {
-            reasonText = "This server is only for students at " + UniversityName + ".\n" +
+            reasonText = "This server is only for students in " + CityName + ".\n" +
                     "You need to verify that you're a student before you can join.\n" +
                     "\n" +
                     "To verify your account please visit mcuni.org/verify";
